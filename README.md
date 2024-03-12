@@ -9,5 +9,4 @@ home-manager switch --flake .#nusendra@macbook-pro-m2
 
 ```
 
-By default I addded Hello program to home manger, so that you can test by run this command `hello` into your terminal. Eventhough you haven't hello program
-in your machine, you can run this hello from nix's home-manager
+By default, I've included the 'Hello' program in Home Manager, allowing you to test it by simply running the command hello in your terminal. Even if the 'Hello' program isn't installed on your machine, you can still access it through Nix's Home Manager.

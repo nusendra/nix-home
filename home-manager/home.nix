@@ -1,5 +1,3 @@
-# This is your home-manager configuration file
-# Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 {
   inputs,
   lib,
@@ -7,7 +5,7 @@
   pkgs,
   ...
 }: {
-  # You can import other home-manager modules here
+  # Import other home-manager modules here
   imports = [
     # If you want to use home-manager modules from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModule
@@ -38,7 +36,6 @@
     };
   };
 
-  # TODO: Set your username
   home = {
     username = "nusendra";
     homeDirectory = "/Users/nusendra";
