@@ -41,14 +41,21 @@
     homeDirectory = "/Users/nusendra";
   };
 
-  # programs.neovim.enable = true;
   home.packages = with pkgs; [
     tmux
+    neofetch
   ];
 
-  # Enable home-manager and git
+  # Enable home-manager, nvim, and  git
   programs.home-manager.enable = true;
   programs.git.enable = true;
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
+    vimdiffAlias = true;
+  };
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
