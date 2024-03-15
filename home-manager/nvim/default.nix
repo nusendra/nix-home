@@ -1,6 +1,12 @@
 { pkgs, ... }:
 let
     nvimKeymaps = import ./configs/keymaps.nix;
+    nvimSettings= import ./configs/settings.nix;
+
+    customKeybindings = ''
+        ${nvimKeymaps.neovimKeymaps.customKeybindings}
+        ${nvimSettings.neovimSettings.customSettings}
+    '';
 in
 {
     programs.neovim = {
@@ -20,6 +26,6 @@ in
                 config = builtins.readFile(./configs/lua-line.lua);
             }
         ];
-        extraConfig = nvimKeymaps.neovimKeymaps.customKeybindings;
+        extraConfig = customKeybindings;
     };
 }
