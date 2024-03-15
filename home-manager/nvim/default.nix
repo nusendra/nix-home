@@ -1,4 +1,7 @@
 { pkgs, ... }:
+let
+    nvimKeymaps = import ./configs/keymaps.nix;
+in
 {
     programs.neovim = {
         enable = true;
@@ -7,11 +10,15 @@
         vimdiffAlias = true;
         plugins = with pkgs.vimPlugins; [
             vim-trailing-whitespace
+            auto-pairs
+            vim-fugitive
+            comment-nvim
             {
                 plugin = lualine-nvim;
                 type = "lua";
                 config = builtins.readFile(./configs/lua-line.lua);
             }
         ];
+        extraConfig = nvimKeymaps.neovimKeymaps.customKeybindings;
     };
 }
