@@ -25,6 +25,15 @@ in
             nui-nvim
             neo-tree-nvim
             telescope-nvim
+            nvim-lspconfig
+            lsp-zero-nvim
+            cmp-nvim-lsp
+            nvim-cmp
+            {
+                plugin = lazy-lsp-nvim;
+                type = "lua";
+                config = builtins.readFile(./configs/lazy-lsp.lua);
+            }
             {
                 plugin = lualine-nvim;
                 type = "lua";
