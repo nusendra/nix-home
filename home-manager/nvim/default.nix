@@ -20,6 +20,10 @@ in
             vim-fugitive
             comment-nvim
             oceanic-next
+            plenary-nvim
+            nvim-web-devicons
+            nui-nvim
+            neo-tree-nvim
             {
                 plugin = lualine-nvim;
                 type = "lua";
