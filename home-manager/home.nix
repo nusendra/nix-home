@@ -11,7 +11,7 @@
     # inputs.nix-colors.homeManagerModule
 
     # You can also split up your configuration and import pieces of it here:
-    # ./nvim.nix
+    ./nvim
   ];
 
   nixpkgs = {
@@ -19,13 +19,6 @@
     overlays = [
       # If you want to use overlays exported from other flakes:
       # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
     ];
     # Configure your nixpkgs instance
     config = {
@@ -43,19 +36,11 @@
 
   home.packages = with pkgs; [
     tmux
-    neofetch
   ];
 
-  # Enable home-manager, nvim, and  git
+  # Enable home-manager and  git
   programs.home-manager.enable = true;
   programs.git.enable = true;
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-    viAlias = true;
-    vimAlias = true;
-    vimdiffAlias = true;
-  };
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
