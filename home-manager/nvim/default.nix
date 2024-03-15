@@ -13,6 +13,7 @@ in
             auto-pairs
             vim-fugitive
             comment-nvim
+            oceanic-next
             {
                 plugin = lualine-nvim;
                 type = "lua";
