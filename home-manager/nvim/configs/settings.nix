@@ -1,6 +1,6 @@
 {
     neovimSettings = {
-        customSettings = ''       
+        customSettings = ''
             set relativenumber
             set number
             set wrap

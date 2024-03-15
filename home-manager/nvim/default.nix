@@ -24,6 +24,7 @@ in
             nvim-web-devicons
             nui-nvim
             neo-tree-nvim
+            telescope-nvim
             {
                 plugin = lualine-nvim;
                 type = "lua";
