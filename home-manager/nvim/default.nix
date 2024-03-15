@@ -6,9 +6,12 @@
         vimAlias = true;
         vimdiffAlias = true;
         plugins = with pkgs.vimPlugins; [
-            gruvbox-material
             nvim-surround
-            vim-airline
+            {
+                plugin = lualine-nvim;
+                type = "lua";
+                config = builtins.readFile(./configs/lua-line.lua);
+            }
         ];
     };
 }
