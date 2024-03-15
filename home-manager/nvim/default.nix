@@ -6,7 +6,7 @@
         vimAlias = true;
         vimdiffAlias = true;
         plugins = with pkgs.vimPlugins; [
-            nvim-surround
+            vim-trailing-whitespace
             {
                 plugin = lualine-nvim;
                 type = "lua";
