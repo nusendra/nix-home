@@ -25,19 +25,30 @@ in
             nui-nvim
             neo-tree-nvim
             telescope-nvim
-            nvim-lspconfig
-            lsp-zero-nvim
-            cmp-nvim-lsp
-            nvim-cmp
-            {
-                plugin = lazy-lsp-nvim;
-                type = "lua";
-                config = builtins.readFile(./configs/lazy-lsp.lua);
-            }
+
             {
                 plugin = lualine-nvim;
                 type = "lua";
                 config = builtins.readFile(./configs/lua-line.lua);
+            }
+
+            #LSP and completion
+            nvim-lspconfig
+            cmp-nvim-lsp
+            cmp-buffer
+            cmp-path
+            cmp-cmdline
+            lsp-zero-nvim
+            cmp-nvim-lsp
+            {
+                plugin = nvim-cmp;
+                type = "lua";
+                config = builtins.readFile(./configs/cmp.lua);
+            }
+            {
+                plugin = lazy-lsp-nvim;
+                type = "lua";
+                config = builtins.readFile(./configs/lazy-lsp.lua);
             }
         ];
         extraConfig = customKeybindings;
