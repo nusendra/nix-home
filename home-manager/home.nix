@@ -42,6 +42,41 @@
   programs.home-manager.enable = true;
   programs.git.enable = true;
 
+  programs.zsh = {
+    enable = true;
+        enableCompletion = false; # enabled in oh-my-zsh
+        shellAliases = {
+          v ="nvim";
+          t ="tmux";
+          work ="cd ~/Projects/";
+          nixconf = "cd ~/.config/nix";
+          gplom = "git pull origin master";
+          gploma = "git pull origin main";
+          gplod = "git pull origin dev";
+          gpsom = "git push origin master";
+          gpsoma = "git push origin main";
+          gpsod = "git push origin dev";
+          gcm = "git checkout master";
+          gcd = "git checkout dev";
+          gs = "git status";
+          gd = "git diff";
+          gst = "git stash";
+          gcb = "git checkout -b ";
+          gc = "git checkout ";
+          glo = "git log --oneline";
+          gl = "git log";
+          gpo = "git push origin ";
+          ga = "git add .";
+          gcom = "git commit -m ";
+          gmer = "git merge ";
+        };
+        oh-my-zsh = {
+          enable = true;
+          plugins = [ "git" ];
+          theme = "robbyrussell";
+        };
+  };
+
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
 
