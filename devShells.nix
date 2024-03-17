@@ -2,7 +2,7 @@
 {
   # nix develop ".#devShells.node18"
   node20 = pkgs.mkShell {
-    description = "Node.js 18";
+    description = "Node.js 20";
     buildInputs = with pkgs; [
       nodejs_20
       (nodePackages.yarn.override { nodejs = nodejs_20; })

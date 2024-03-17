@@ -5,7 +5,7 @@
             nnoremap <C-J> <C-W><C-J>
             nnoremap <C-K> <C-W><C-K>
             nnoremap <C-L> <C-W><C-L>
-            nnoremap <C-B> :NeoTreeFocusToggle<CR>
+            nnoremap <C-B> :Neotree toggle<CR>
             nnoremap <C-N> :tabnew<CR>
             nnoremap <C-Y> :tabprevious<CR>
             nnoremap <C-U> :tabnext<CR>
