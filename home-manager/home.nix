@@ -69,6 +69,10 @@
           ga = "git add .";
           gcom = "git commit -m ";
           gmer = "git merge ";
+
+          devphp = "cd ~/.config/nix/ && nix develop '.#devShells.php'";
+          devnode = "cd ~/.config/nix/ && nix develop '.#devShells.node20'";
+          devrust = "cd ~/.config/nix/ && nix develop '.#devShells.rust'";
         };
         oh-my-zsh = {
           enable = true;
