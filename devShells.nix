@@ -70,6 +70,7 @@ in
       cargo
       gcc
       rustfmt
+      rustup
     ];
     shellHook = ''
       ${shellAliases.aliases}
