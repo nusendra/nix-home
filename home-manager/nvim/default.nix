@@ -23,7 +23,11 @@ in
             plenary-nvim
             nvim-web-devicons
             nui-nvim
-            telescope-nvim
+            {
+                plugin = telescope-nvim;
+                type = "lua";
+                config = builtins.readFile(./configs/telescope-nvim.lua);
+            }
             {
                 plugin = neo-tree-nvim;
                 type = "lua";
