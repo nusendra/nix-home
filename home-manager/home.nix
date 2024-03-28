@@ -36,6 +36,7 @@
 
   home.packages = with pkgs; [
     tmux
+    ripgrep
   ];
 
   # Enable home-manager and  git
