@@ -25,5 +25,6 @@
     alias ga="git add .";
     alias gcom="git commit -m ";
     alias gmer="git merge ";
+    alias p="php artisan serve";
   '';
 }
