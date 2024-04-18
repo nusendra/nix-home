@@ -11,40 +11,35 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    flake-utils.url = "github:numtide/flake-utils";
-
+    # TODO: Add any other flake you might need
+    # hardware.url = "github:nixos/nixos-hardware";
     nix-colors.url = "github:misterio77/nix-colors";
-
   };
 
   outputs = {
     self,
     nixpkgs,
     home-manager,
-    flake-utils,
     ...
-  }:
-  # @ inputs:
-  flake-utils.lib.eachDefaultSystem (system:
-    {
-      # Standalone home-manager configuration entrypoint
-      # Available through 'home-manager --flake .#your-username@your-hostname'
-      packages = {
-        homeConfigurations = {
-          "default" = home-manager.lib.homeManagerConfiguration {
-            pkgs = nixpkgs.legacyPackages.${system}; # Home-manager requires 'pkgs' instance
-            # extraSpecialArgs = {inherit inputs outputs;};
-            # > Our main home-manager configuration file <
-            modules = [
-              ./home-manager/home.nix
-            ];
-          };
-        };
+  } @ inputs: let
+    inherit (self) outputs;
+    system = "aarch64-darwin";
+  in {
+    # Standalone home-manager configuration entrypoint
+    # Available through 'home-manager --flake .#your-username@your-hostname'
+    homeConfigurations = {
+      "nusendra@macbook-pro-m2" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.${system}; # Home-manager requires 'pkgs' instance
+        extraSpecialArgs = {inherit inputs outputs;};
+        # > Our main home-manager configuration file <
+        modules = [
+          ./home-manager/home.nix
+        ];
       };
+    };
 
-      devShells = import ./devShells.nix {
-        pkgs = nixpkgs.legacyPackages.${system};
-      };
-    }
-  );
+    devShells = import ./devShells.nix {
+      pkgs = nixpkgs.legacyPackages.${system};
+    };
+  };
 }
