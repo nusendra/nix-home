@@ -38,6 +38,11 @@ in
                 type = "lua";
                 config = builtins.readFile(./configs/lua-line.lua);
             }
+            {
+                plugin = neogit;
+                type = "lua";
+                config = builtins.readFile(./configs/neogit.lua);
+            }
 
             #LSP and completion
             nvim-lspconfig
