@@ -10,6 +10,7 @@ in
       nodejs_20
       (nodePackages.yarn.override { nodejs = nodejs_20; })
       bun
+      redis
     ];
     shellHook = ''
       ${shellAliases.aliases}
