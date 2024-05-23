@@ -73,6 +73,7 @@
 
           devphp = "cd ~/.config/nix/ && nix develop '.#devShells.php'";
           devnode = "cd ~/.config/nix/ && nix develop '.#devShells.node20'";
+          devbun = "cd ~/.config/nix/ && nix develop '.#devShells.bun'";
           devrust = "cd ~/.config/nix/ && nix develop '.#devShells.rust'";
         };
         oh-my-zsh = {

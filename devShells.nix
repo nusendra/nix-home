@@ -3,12 +3,23 @@ let
   shellAliases = import ./utils/shellAliases.nix;
 in
 {
-  # nix develop ".#devShells.node18"
+  # nix develop ".#devShells.node20"
   node20 = pkgs.mkShell {
     description = "Node.js 20";
     buildInputs = with pkgs; [
       nodejs_20
       (nodePackages.yarn.override { nodejs = nodejs_20; })
+    ];
+    shellHook = ''
+      ${shellAliases.aliases}
+    '';
+  };
+
+  # nix develop ".#devShells.bun"
+  bun = pkgs.mkShell {
+    description = "Bun";
+    buildInputs = with pkgs; [
+      bun
     ];
     shellHook = ''
       ${shellAliases.aliases}
