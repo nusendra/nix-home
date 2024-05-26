@@ -11,9 +11,17 @@ in
       (nodePackages.yarn.override { nodejs = nodejs_20; })
       bun
       redis
+      postgresql
     ];
     shellHook = ''
       ${shellAliases.aliases}
+      # init db, create logfile, and start the postgre db
+      initdb -D ~/.postgres
+      pg_ctl -D ~/.postgres -l logfile start
+      pg_ctl -D ~/.postgres status
+
+      # stop database when leaving nix shell
+      trap "pg_ctl -D ~/.postgres stop" EXIT
     '';
   };
 
