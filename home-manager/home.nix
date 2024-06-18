@@ -72,8 +72,10 @@
           gmer = "git merge ";
 
           devphp = "cd ~/.config/nix/ && nix develop '.#devShells.php'";
+          devphp81 = "cd ~/.config/nix/ && nix develop '.#devShells.php81'";
           devjs = "cd ~/.config/nix/ && nix develop '.#devShells.js'";
           devrust = "cd ~/.config/nix/ && nix develop '.#devShells.rust'";
+          devmariadb = "cd ~/.config/nix/ && nix develop '.#devShells.mariadb'";
         };
         oh-my-zsh = {
           enable = true;
