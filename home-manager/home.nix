@@ -32,11 +32,18 @@
   home = {
     username = "nusendra";
     homeDirectory = "/Users/nusendra";
+    sessionVariables = {
+      # Set environment variables here
+      ANDROID_HOME = "${config.home.homeDirectory}/Library/Android/sdk";
+      JAVA_HOME="/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home";
+      PATH = pkgs.lib.mkBefore "${config.home.homeDirectory}/Library/Android/sdk/emulator:${config.home.homeDirectory}/Library/Android/sdk/platform-tools";
+    };
   };
 
   home.packages = with pkgs; [
     ripgrep
   ];
+
 
   # Enable home-manager and  git
   programs.home-manager.enable = true;
