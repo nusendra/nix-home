@@ -45,8 +45,8 @@ in
             }
 
             #LSP and completion
-            nvim-lspconfig
-            cmp-nvim-lsp
+            # nvim-lspconfig
+            # cmp-nvim-lsp
             cmp-buffer
             cmp-path
             cmp-cmdline
@@ -62,6 +62,9 @@ in
                 type = "lua";
                 config = builtins.readFile(./configs/lazy-lsp.lua);
             }
+
+            # Pretty errors
+            trouble-nvim
         ];
         extraConfig = customKeybindings;
     };

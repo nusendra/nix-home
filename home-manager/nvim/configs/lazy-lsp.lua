@@ -10,6 +10,6 @@ end)
 
 require('lazy-lsp').setup{
   excluded_servers = {
-    "ccls", "zk", "sqls"
+    "ccls", "zk", "sqls", "denols"
   },
 }

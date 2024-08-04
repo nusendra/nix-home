@@ -35,6 +35,7 @@
     sessionVariables = {
       # Set environment variables here
       ANDROID_HOME = "${config.home.homeDirectory}/Library/Android/sdk";
+      ANDROID_NDK_HOME="${config.home.homeDirectory}/Library/Android/sdk/ndk";
       JAVA_HOME="/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home";
       PATH = pkgs.lib.mkBefore "${config.home.homeDirectory}/Library/Android/sdk/emulator:${config.home.homeDirectory}/Library/Android/sdk/platform-tools";
     };
