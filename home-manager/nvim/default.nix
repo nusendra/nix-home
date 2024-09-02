@@ -65,6 +65,9 @@ in
 
             # Pretty errors
             trouble-nvim
+
+            # jump to the specific word easily
+            leap-nvim
         ];
         extraConfig = customKeybindings;
     };

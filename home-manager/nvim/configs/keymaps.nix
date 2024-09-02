@@ -13,6 +13,10 @@
             nnoremap <C-P> :Telescope find_files<CR>
             nnoremap <C-O> :Telescope live_grep<CR>
             nnoremap <C-E> :lua vim.diagnostic.open_float()<CR>
+            nnoremap <C-E> :lua vim.diagnostic.open_float()<CR>
+
+            nmap s <Plug>(leap-forward-to)
+            nmap S <Plug>(leap-backward-to)
         '';
     };
 }
