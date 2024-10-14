@@ -120,7 +120,7 @@ in
       chmod 755 $ES_DATA_DIR
 
       # Run Elasticsearch with the log directory specified
-      elasticsearch -d -Epath.logs=$ES_LOG_DIR -Epath.data=$ES_DATA_DIR
+      elasticsearch -d
     '';
   };
 }
