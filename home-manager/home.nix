@@ -84,7 +84,7 @@
           devjs = "cd ~/.config/nix/ && nix develop '.#devShells.js'";
           devrust = "cd ~/.config/nix/ && nix develop '.#devShells.rust'";
           devmariadb = "cd ~/.config/nix/ && nix develop '.#devShells.mariadb'";
-          devwplarasearch = "cd ~/.config/nix/ && export NIXPKGS_ALLOW_UNFREE=1 && nix develop --impure '.#devShells.wplarasearch'";
+          develasticsearch = "cd ~/.config/nix/ && export NIXPKGS_ALLOW_UNFREE=1 && nix develop --impure '.#devShells.elasticsearch'";
         };
         oh-my-zsh = {
           enable = true;

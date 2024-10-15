@@ -86,25 +86,14 @@ in
     '';
   };
 
-  # wordpress, laravel, and elasticsearch
-  # nix develop ".#devshells.wplarasearch"
-  wplarasearch = pkgs.mkShell {
-    description = "Wordpress, Laravel and ElasticSearch";
+  # elasticsearch
+  # nix develop ".#devshells.elasticsearch"
+  elasticsearch = pkgs.mkShell {
+    description = "ElasticSearch";
     buildInputs = with pkgs; [
-      wordpress
-      mariadb_110
-      php81
-      php81Packages.composer
-      (with php81Extensions; [ pdo mysqli xml ])
       elasticsearch
-      wp-cli
-      nginx
     ];
     shellHook = ''
-      ${shellAliases.aliases}
-      MYSQL_BASEDIR=${pkgs.mariadb_110}
-      ${mariadb.command}
-
       # Set ES_JAVA_HOME explicitly if needed
       export ES_JAVA_HOME=${pkgs.jdk}
       export ES_HOME=$(dirname $(dirname $(which elasticsearch)))
