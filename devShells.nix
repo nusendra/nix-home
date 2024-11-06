@@ -34,12 +34,19 @@ in
       redis
       php83
       php83Packages.composer
-      (with (php83Extensions); [pdo xml])
+      (with (php83Extensions); [pdo xml redis])
     ];
     shellHook = ''
       ${shellAliases.aliases}
       MYSQL_BASEDIR=${pkgs.mariadb_110}
       ${mariadb.command}
+
+      echo "Starting Redis..."
+      redis-server --daemonize yes
+
+      echo "PHP configuration:"
+      php --ini
+      php -m | grep redis
     '';
   };
   # nix develop ".#devShells.php81"
