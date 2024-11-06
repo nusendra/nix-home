@@ -31,6 +31,7 @@ in
     description = "PHP 8.3";
     buildInputs = with pkgs; [
       mariadb_110
+      typesense
       redis
       php83
       php83Packages.composer
