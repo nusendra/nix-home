@@ -85,6 +85,21 @@
           devrust = "cd ~/.config/nix/ && nix develop '.#devShells.rust'";
           devmariadb = "cd ~/.config/nix/ && nix develop '.#devShells.mariadb'";
           develasticsearch = "cd ~/.config/nix/ && export NIXPKGS_ALLOW_UNFREE=1 && nix develop --impure '.#devShells.elasticsearch'";
+
+          dcb = "docker-compose build";
+          dcu = "docker-compose up";
+          dcud = "docker-compose up -d";
+          dcd = "docker-compose down";
+
+          dcbdev = "docker-compose -f docker-compose.dev.yml build";
+          dcudev = "docker-compose -f docker-compose.dev.yml up";
+          dcuddev = "docker-compose -f docker-compose.dev.yml up -d";
+          dcddev = "docker-compose -f docker-compose.dev.yml down";
+
+          dcbprod = "docker-compose -f docker-compose.prod.yml build";
+          dcuprod = "docker-compose -f docker-compose.prod.yml up";
+          dcudprod = "docker-compose -f docker-compose.prod.yml up -d";
+          dcdprod = "docker-compose -f docker-compose.prod.yml down";
         };
         oh-my-zsh = {
           enable = true;
