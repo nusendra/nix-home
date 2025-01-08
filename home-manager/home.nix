@@ -44,6 +44,7 @@
 
   home.packages = with pkgs; [
     ripgrep
+    docker-compose
   ];
 
 
