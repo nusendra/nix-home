@@ -34,7 +34,7 @@ in
       redis
       php83
       php83Packages.composer
-      (with (php83Extensions); [pdo xml redis])
+      (with (php83Extensions); [pdo xml redis mongodb])
     ];
     shellHook = ''
       ${shellAliases.aliases}
@@ -44,9 +44,15 @@ in
       echo "Starting Redis..."
       redis-server --daemonize yes
 
+      echo "extension=/nix/store/jdj6ml38xjsayq5zmgimlxdkbwarsmng-php-mongodb-1.17.3/lib/php/extensions/mongodb.so" > /Users/nusendra/.php-extensions/mongodb.ini
+
+      # Set PHP_INI_SCAN_DIR to include the custom directory
+      export PHP_INI_SCAN_DIR="/nix/store/yxlsvn4biz4b2r2hajpys297r3yqsj3r-php-with-extensions-8.3.4/lib:/Users/nusendra/.php-extensions"
+
       echo "PHP configuration:"
       php --ini
       php -m | grep redis
+      php -m | grep mongo
     '';
   };
   # nix develop ".#devShells.php81"
