@@ -68,6 +68,13 @@ in
 
             # jump to the specific word easily
             leap-nvim
+
+            # copilot
+            {
+                plugin = copilot-lua;
+                type = "lua";
+                config = builtins.readFile(./configs/copilot.lua);
+            }
         ];
         extraConfig = customKeybindings;
     };
