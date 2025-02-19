@@ -20,6 +20,22 @@ cmp.setup({
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.abort(),
     ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if require("copilot.suggestion").is_visible() then
+        require("copilot.suggestion").accept()
+      elseif cmp.visible() then
+        cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+      elseif luasnip.expandable() then
+        luasnip.expand()
+      elseif has_words_before() then
+        cmp.complete()
+      else
+        fallback()
+      end
+    end, {
+      "i",
+      "s",
+    }),
   }),
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
