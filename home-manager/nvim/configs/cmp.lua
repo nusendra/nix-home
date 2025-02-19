@@ -25,10 +25,6 @@ cmp.setup({
         require("copilot.suggestion").accept()
       elseif cmp.visible() then
         cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
-      elseif luasnip.expandable() then
-        luasnip.expand()
-      elseif has_words_before() then
-        cmp.complete()
       else
         fallback()
       end
