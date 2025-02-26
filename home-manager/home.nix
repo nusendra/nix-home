@@ -39,7 +39,22 @@
       JAVA_HOME="/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home";
       PATH = pkgs.lib.mkBefore "${config.home.homeDirectory}/Library/Android/sdk/emulator:${config.home.homeDirectory}/Library/Android/sdk/platform-tools";
       NVM_DIR = "$HOME/.nvm";
+
+      NIX_PATH = "$HOME/.nix-defexpr/channels";
+      NIX_PROFILES = "/nix/var/nix/profiles/default /etc/profiles/per-user/$USER";
+      NIX_USER_PROFILE_DIR = "/nix/var/nix/profiles/per-user/$USER";
     };
+    file.".zprofile".text = ''
+      # Load Homebrew environment
+      if [ -x /opt/homebrew/bin/brew ]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+      fi
+
+      # Load Nix environment
+      if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
+        source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+      fi
+    '';
   };
 
   home.packages = with pkgs; [
