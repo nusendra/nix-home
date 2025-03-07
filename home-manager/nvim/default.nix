@@ -75,6 +75,13 @@ in
                 type = "lua";
                 config = builtins.readFile(./configs/copilot.lua);
             }
+
+            # avante
+            {
+                plugin = avante-nvim;
+                type = "lua";
+                config = builtins.readFile(./configs/avante.lua);
+            }
         ];
         extraConfig = customKeybindings;
     };
