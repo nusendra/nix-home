@@ -30,7 +30,7 @@ in
   php = pkgs.mkShell {
     description = "PHP 8.3";
     buildInputs = with pkgs; [
-      mariadb_110
+      mariadb_114
       redis
       php83
       php83Packages.composer
@@ -38,7 +38,7 @@ in
     ];
     shellHook = ''
       ${shellAliases.aliases}
-      MYSQL_BASEDIR=${pkgs.mariadb_110}
+      MYSQL_BASEDIR=${pkgs.mariadb_114}
       ${mariadb.command}
 
       echo "Starting Redis..."
@@ -59,14 +59,14 @@ in
   php81 = pkgs.mkShell {
     description = "PHP 8.1";
     buildInputs = with pkgs; [
-      mariadb_110
+      mariadb_114
       php81
       php81Packages.composer
       (with (php83Extensions); [pdo xml])
     ];
     shellHook = ''
       ${shellAliases.aliases}
-      MYSQL_BASEDIR=${pkgs.mariadb_110}
+      MYSQL_BASEDIR=${pkgs.mariadb_114}
       ${mariadb.command}
     '';
   };
@@ -75,11 +75,11 @@ in
   mariadb = pkgs.mkShell {
     description = "MariaDB";
     buildInputs = with pkgs; [
-      mariadb_110
+      mariadb_114
     ];
     shellHook = ''
       ${shellAliases.aliases}
-      MYSQL_BASEDIR=${pkgs.mariadb_110}
+      MYSQL_BASEDIR=${pkgs.mariadb_114}
       ${mariadb.command}
     '';
   };

@@ -82,6 +82,9 @@ in
                 type = "lua";
                 config = builtins.readFile(./configs/avante.lua);
             }
+
+            # global search and replace
+            nvim-spectre
         ];
         extraConfig = customKeybindings;
     };
