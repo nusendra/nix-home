@@ -2,7 +2,7 @@
 
 ### Build your home
 ```
-home-manager switch --flake .#nusendra@macbook-pro-m2
+home-manager switch --flake .#nusendra
 ```
 
 ### Run dev shells

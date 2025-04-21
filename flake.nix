@@ -28,7 +28,7 @@
     # Standalone home-manager configuration entrypoint
     # Available through 'home-manager --flake .#your-username@your-hostname'
     homeConfigurations = {
-      "nusendra@macbook-pro-m2" = home-manager.lib.homeManagerConfiguration {
+      "nusendra" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.${system}; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs;};
         # > Our main home-manager configuration file <
