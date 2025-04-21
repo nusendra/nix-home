@@ -4,7 +4,10 @@
   config,
   pkgs,
   ...
-}: {
+}: let
+  username = builtins.getEnv "USER";
+  homeDirectory = builtins.getEnv "HOME";
+in {
   # Import other home-manager modules here
   imports = [
     # If you want to use home-manager modules from other flakes (such as nix-colors):
@@ -30,19 +33,18 @@
   };
 
   home = {
-    username = "nusendra";
-    homeDirectory = "/Users/nusendra";
+    inherit username homeDirectory;
     sessionVariables = {
       # Set environment variables here
-      ANDROID_HOME = "${config.home.homeDirectory}/Library/Android/sdk";
-      ANDROID_NDK_HOME="${config.home.homeDirectory}/Library/Android/sdk/ndk";
+      ANDROID_HOME = "${homeDirectory}/Library/Android/sdk";
+      ANDROID_NDK_HOME="${homeDirectory}/Library/Android/sdk/ndk";
       JAVA_HOME="/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home";
-      PATH = pkgs.lib.mkBefore "${config.home.homeDirectory}/Library/Android/sdk/emulator:${config.home.homeDirectory}/Library/Android/sdk/platform-tools";
-      NVM_DIR = "$HOME/.nvm";
+      PATH = pkgs.lib.mkBefore "${homeDirectory}/Library/Android/sdk/emulator:${homeDirectory}/Library/Android/sdk/platform-tools";
+      NVM_DIR = "${homeDirectory}/.nvm";
 
-      NIX_PATH = "$HOME/.nix-defexpr/channels";
-      NIX_PROFILES = "/nix/var/nix/profiles/default /etc/profiles/per-user/$USER";
-      NIX_USER_PROFILE_DIR = "/nix/var/nix/profiles/per-user/$USER";
+      NIX_PATH = "${homeDirectory}/.nix-defexpr/channels";
+      NIX_PROFILES = "/nix/var/nix/profiles/default /etc/profiles/per-user/${username}";
+      NIX_USER_PROFILE_DIR = "/nix/var/nix/profiles/per-user/${username}";
     };
     file.".zprofile".text = ''
       # Load Homebrew environment
@@ -128,7 +130,7 @@
       [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
 
       export PATH="/Applications/Docker.app/Contents/Resources/bin:$PATH"
-      export DOCKER_HOST=unix:///Users/nusendra/.docker/run/docker.sock
+      export DOCKER_HOST=unix:///Users/${username}/.docker/run/docker.sock
     '';
   };
 

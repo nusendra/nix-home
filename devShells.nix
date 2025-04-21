@@ -2,6 +2,7 @@
 let
   shellAliases = import ./utils/shellAliases.nix;
   mariadb = import ./utils/mariadb.nix;
+  username = builtins.getEnv "USER";
 in
 {
   # nix develop ".#devShells.node20"
@@ -44,10 +45,10 @@ in
       echo "Starting Redis..."
       redis-server --daemonize yes
 
-      echo "extension=/nix/store/jdj6ml38xjsayq5zmgimlxdkbwarsmng-php-mongodb-1.17.3/lib/php/extensions/mongodb.so" > /Users/nusendra/.php-extensions/mongodb.ini
+      echo "extension=/nix/store/jdj6ml38xjsayq5zmgimlxdkbwarsmng-php-mongodb-1.17.3/lib/php/extensions/mongodb.so" > /Users/${username}/.php-extensions/mongodb.ini
 
       # Set PHP_INI_SCAN_DIR to include the custom directory
-      export PHP_INI_SCAN_DIR="/nix/store/yxlsvn4biz4b2r2hajpys297r3yqsj3r-php-with-extensions-8.3.4/lib:/Users/nusendra/.php-extensions"
+      export PHP_INI_SCAN_DIR="/nix/store/yxlsvn4biz4b2r2hajpys297r3yqsj3r-php-with-extensions-8.3.4/lib:/Users/${username}/.php-extensions"
 
       echo "PHP configuration:"
       php --ini
