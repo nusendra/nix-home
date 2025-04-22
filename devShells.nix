@@ -5,7 +5,7 @@ let
   username = builtins.getEnv "USER";
 in
 {
-	# mysql client
+	# nix develop ".#devShells.mysql-client"
 	mysql-client = pkgs.mkShell {
     description = "Just MySQL Client";
     buildInputs = with pkgs; [
@@ -19,7 +19,7 @@ in
 		'';
 	};
 
-  # nix develop ".#devShells.node20"
+  # nix develop ".#devShells.js"
   js = pkgs.mkShell {
     description = "Node.js 20 & Bun";
     buildInputs = with pkgs; [
@@ -38,6 +38,44 @@ in
 
       # stop database when leaving nix shell
       trap "pg_ctl -D ~/.postgres stop" EXIT
+    '';
+  };
+
+  # nix develop ".#devShells.onlyjs"
+  only-js = pkgs.mkShell {
+    description = "Only Node.js";
+    buildInputs = with pkgs; [
+      nodejs_20
+      (nodePackages.yarn.override { nodejs = nodejs_20; })
+    ];
+    shellHook = ''
+      ${shellAliases.aliases}
+    '';
+  };
+
+  # nix develop ".#devShells.onl-yphp"
+  only-php = pkgs.mkShell {
+    description = "Only PHP 8.1";
+    buildInputs = with pkgs; [
+      php81
+      php81Packages.composer
+      (with (php83Extensions); [pdo xml])
+    ];
+    shellHook = ''
+      ${shellAliases.aliases}
+    '';
+  };
+
+  # nix develop ".#devShells.only-php83"
+  only-php83 = pkgs.mkShell {
+    description = "Only PHP 8.3";
+    buildInputs = with pkgs; [
+      php83
+      php83Packages.composer
+      (with (php83Extensions); [pdo xml])
+    ];
+    shellHook = ''
+      ${shellAliases.aliases}
     '';
   };
 

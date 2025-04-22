@@ -109,6 +109,9 @@ in {
       devmariadb = "cd ~/.config/nix/ && nix develop '.#devShells.mariadb'";
       develasticsearch = "cd ~/.config/nix/ && export NIXPKGS_ALLOW_UNFREE=1 && nix develop --impure '.#devShells.elasticsearch'";
       devmysqlclient = "cd ~/.config/nix/ && nix develop '.#devShells.mysql-client'";
+      devonlyphp = "cd ~/.config/nix/ && nix develop '.#devShells.only-php'";
+      devonlyphp83 = "cd ~/.config/nix/ && nix develop '.#devShells.only-php83'";
+      devonlyjs = "cd ~/.config/nix/ && nix develop '.#devShells.only-js'";
 
       dcb = "docker-compose build";
       dcu = "docker-compose up";
