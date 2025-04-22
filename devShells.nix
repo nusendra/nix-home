@@ -5,6 +5,20 @@ let
   username = builtins.getEnv "USER";
 in
 {
+	# mysql client
+	mysql-client = pkgs.mkShell {
+    description = "Just MySQL Client";
+    buildInputs = with pkgs; [
+      mysql-client
+    ];
+
+		shellHook = ''
+			export PATH="${pkgs.mysql-client}/bin:$PATH"
+			export LDFLAGS="-L${pkgs.mysql-client}/lib"
+			export CPPFLAGS="-I${pkgs.mysql-client}/include"
+		'';
+	};
+
   # nix develop ".#devShells.node20"
   js = pkgs.mkShell {
     description = "Node.js 20 & Bun";
