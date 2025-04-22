@@ -6,6 +6,11 @@ let
     customKeybindings = ''
         ${nvimKeymaps.neovimKeymaps.customKeybindings}
         ${nvimSettings.neovimSettings.customSettings}
+
+				augroup blade_ft
+					autocmd!
+					autocmd BufRead,BufNewFile *.blade.php set filetype=php
+				augroup END
     '';
 in
 {
