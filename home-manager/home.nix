@@ -111,6 +111,7 @@ in {
       devonlyphp = "cd ~/.config/nix/ && nix develop '.#devShells.only-php'";
       devonlyphp83 = "cd ~/.config/nix/ && nix develop '.#devShells.only-php83'";
       devonlyjs = "cd ~/.config/nix/ && nix develop '.#devShells.only-js'";
+      devtypesense = "cd ~/.config/nix/ && nix develop '.#devShells.typesense'";
 
       dcb = "docker-compose build";
       dcu = "docker-compose up";

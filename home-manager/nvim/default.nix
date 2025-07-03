@@ -82,11 +82,11 @@ in
             }
 
             # avante
-            {
-                plugin = avante-nvim;
-                type = "lua";
-                config = builtins.readFile(./configs/avante.lua);
-            }
+            # {
+            #     plugin = avante-nvim;
+            #     type = "lua";
+            #     config = builtins.readFile(./configs/avante.lua);
+            # }
 
             # global search and replace
             nvim-spectre

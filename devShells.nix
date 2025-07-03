@@ -3,6 +3,15 @@ let
   shellAliases = import ./utils/shellAliases.nix;
   mariadb = import ./utils/mariadb.nix;
   username = builtins.getEnv "USER";
+
+	typesenseDataDir = "./.typesense-data";
+
+	typesenseServerFixed = pkgs.typesense.overrideAttrs (old: {
+    src = pkgs.fetchurl {
+      url    = old.src.url;
+      sha256 = "kOjO3kokmvaXr55wcQKUboYzzTSaF9Ye+tY/A4hNvsY=";  # the “got:” hash
+    };
+  });
 in
 {
 	# nix develop ".#devShells.mysql-client"
@@ -59,7 +68,7 @@ in
     buildInputs = with pkgs; [
       php81
       php81Packages.composer
-      (with (php83Extensions); [pdo xml])
+      (with (php81Extensions); [pdo xml])
     ];
     shellHook = ''
       ${shellAliases.aliases}
@@ -72,10 +81,19 @@ in
     buildInputs = with pkgs; [
       php83
       php83Packages.composer
-      (with (php83Extensions); [pdo xml])
+			redis
+      (with (php83Extensions); [pdo xml redis mongodb])
     ];
     shellHook = ''
       ${shellAliases.aliases}
+
+      echo "Starting Redis..."
+      redis-server --daemonize yes
+
+      echo "PHP configuration:"
+      php --ini
+      php -m | grep redis
+      php -m | grep mongo
     '';
   };
 
@@ -149,6 +167,41 @@ in
     ];
     shellHook = ''
       ${shellAliases.aliases}
+    '';
+  };
+
+  # nix develop ".#devShells.typesense"
+  typesense = pkgs.mkShell {
+    description = "Typesense";
+    buildInputs = with pkgs; [
+			typesenseServerFixed
+			curl
+			jq
+    ];
+    shellHook = ''
+      ${shellAliases.aliases}
+
+			# ensure data dir exists
+			mkdir -p ${typesenseDataDir}
+
+			# Start Typesense on port 8108 with an example API key
+			if ! pgrep -f "typesense-server"; then
+				echo "🚀 Launching Typesense server…"
+				typesense-server \
+					--data-dir=${typesenseDataDir} \
+					--api-key="xyz123" \
+					--listen-port=8108 \
+					--enable-cors="*" \
+					--log-level=debug \
+					&> typesense.log &
+				echo "   → PID $!"
+				echo "   → Logs → typesense.log"
+			else
+				echo "✅ Typesense already running (pid $(pgrep -f typesense-server))"
+			fi
+
+			echo ""
+			echo "To test: curl -H \"X-TYPESENSE-API-KEY: xyz123\" http://localhost:8108/health"
     '';
   };
 
