@@ -4,8 +4,6 @@ let
   mariadb = import ./utils/mariadb.nix;
   username = builtins.getEnv "USER";
 
-	typesenseDataDir = "./.typesense-data";
-
 	typesenseServerFixed = pkgs.typesense.overrideAttrs (old: {
     src = pkgs.fetchurl {
       url    = old.src.url;
@@ -62,7 +60,7 @@ in
     '';
   };
 
-  # nix develop ".#devShells.onl-yphp"
+  # nix develop ".#devShells.onlyphp"
   only-php = pkgs.mkShell {
     description = "Only PHP 8.1";
     buildInputs = with pkgs; [
@@ -75,13 +73,15 @@ in
     '';
   };
 
-  # nix develop ".#devShells.only-php83"
-  only-php83 = pkgs.mkShell {
-    description = "Only PHP 8.3";
+  # nix develop ".#devShells.phpjs"
+  php-js = pkgs.mkShell {
+    description = "Only PHP 8.3 and JS";
     buildInputs = with pkgs; [
       php83
       php83Packages.composer
 			redis
+			nodejs_20
+			(nodePackages.yarn.override { nodejs = nodejs_20; })
       (with (php83Extensions); [pdo xml redis mongodb])
     ];
     shellHook = ''
@@ -94,6 +94,12 @@ in
       php --ini
       php -m | grep redis
       php -m | grep mongo
+
+			echo "Node.js version:"
+			node -v
+
+			echo "Yarn version:"
+			yarn -v
     '';
   };
 
@@ -182,13 +188,14 @@ in
       ${shellAliases.aliases}
 
 			# ensure data dir exists
-			mkdir -p ${typesenseDataDir}
+			export typesenseDataDir="$HOME/.typesense-data"
+			mkdir -p "$typesenseDataDir"
 
 			# Start Typesense on port 8108 with an example API key
 			if ! pgrep -f "typesense-server"; then
 				echo "🚀 Launching Typesense server…"
 				typesense-server \
-					--data-dir=${typesenseDataDir} \
+					--data-dir="$typesenseDataDir" \
 					--api-key="xyz123" \
 					--listen-port=8108 \
 					--enable-cors="*" \

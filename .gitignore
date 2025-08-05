@@ -4,3 +4,4 @@ logfile
 result
 .swp
 dump.rdb
+.typesense-data/
