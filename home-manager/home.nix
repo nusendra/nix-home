@@ -71,7 +71,15 @@ in {
   # Enable home-manager and  git
   programs.home-manager.enable = true;
   programs.git.enable = true;
-  programs.tmux.enable = true;
+  programs.tmux = {
+    enable = true;
+    shell = "${pkgs.zsh}/bin/zsh";
+    extraConfig = ''
+      # Ensure tmux uses zsh and loads shell configuration
+      set-option -g default-shell ${pkgs.zsh}/bin/zsh
+      set-option -g default-command ${pkgs.zsh}/bin/zsh
+    '';
+  };
 
   programs.zsh = {
     enable = true;
@@ -100,6 +108,7 @@ in {
       ga = "git add .";
       gcom = "git commit -m ";
       gmer = "git merge ";
+      p = "php artisan serve";
 
       devphp = "cd ~/.config/nix/ && nix develop '.#devShells.php'";
       devphp81 = "cd ~/.config/nix/ && nix develop '.#devShells.php81'";
@@ -141,6 +150,9 @@ in {
 
       export PATH="/Applications/Docker.app/Contents/Resources/bin:$PATH"
       export DOCKER_HOST=unix:///Users/${username}/.docker/run/docker.sock
+      
+      # Ensure aliases are available in all shell sessions (including tmux)
+      setopt aliases
     '';
   };
 

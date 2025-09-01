@@ -1,6 +1,5 @@
 { pkgs, ... }:
 let
-  shellAliases = import ./utils/shellAliases.nix;
   mariadb = import ./utils/mariadb.nix;
   username = builtins.getEnv "USER";
 
@@ -23,6 +22,9 @@ in
 			export PATH="${pkgs.mysql-client}/bin:$PATH"
 			export LDFLAGS="-L${pkgs.mysql-client}/lib"
 			export CPPFLAGS="-I${pkgs.mysql-client}/include"
+			
+			# Start zsh with full configuration
+			exec ${pkgs.zsh}/bin/zsh
 		'';
 	};
 
@@ -37,7 +39,6 @@ in
       postgresql
     ];
     shellHook = ''
-      ${shellAliases.aliases}
       # init db, create logfile, and start the postgre db
       initdb -D ~/.postgres
       pg_ctl -D ~/.postgres -l logfile start
@@ -45,6 +46,9 @@ in
 
       # stop database when leaving nix shell
       trap "pg_ctl -D ~/.postgres stop" EXIT
+      
+      # Start zsh with full configuration
+      exec ${pkgs.zsh}/bin/zsh
     '';
   };
 
@@ -56,7 +60,8 @@ in
       (nodePackages.yarn.override { nodejs = nodejs_20; })
     ];
     shellHook = ''
-      ${shellAliases.aliases}
+      # Start zsh with full configuration
+      exec ${pkgs.zsh}/bin/zsh
     '';
   };
 
@@ -69,7 +74,8 @@ in
       (with (php81Extensions); [pdo xml])
     ];
     shellHook = ''
-      ${shellAliases.aliases}
+      # Start zsh with full configuration
+      exec ${pkgs.zsh}/bin/zsh
     '';
   };
 
@@ -85,7 +91,6 @@ in
       (with (php83Extensions); [pdo xml redis mongodb])
     ];
     shellHook = ''
-      ${shellAliases.aliases}
 
       echo "Starting Redis..."
       redis-server --daemonize yes
@@ -100,6 +105,9 @@ in
 
 			echo "Yarn version:"
 			yarn -v
+			
+			# Start zsh with full configuration
+			exec ${pkgs.zsh}/bin/zsh
     '';
   };
 
@@ -114,7 +122,6 @@ in
       (with (php83Extensions); [pdo xml redis mongodb])
     ];
     shellHook = ''
-      ${shellAliases.aliases}
       MYSQL_BASEDIR=${pkgs.mariadb_114}
       ${mariadb.command}
 
@@ -130,6 +137,9 @@ in
       php --ini
       php -m | grep redis
       php -m | grep mongo
+      
+      # Start zsh with full configuration
+      exec ${pkgs.zsh}/bin/zsh
     '';
   };
   # nix develop ".#devShells.php81"
@@ -142,9 +152,11 @@ in
       (with (php83Extensions); [pdo xml])
     ];
     shellHook = ''
-      ${shellAliases.aliases}
       MYSQL_BASEDIR=${pkgs.mariadb_114}
       ${mariadb.command}
+      
+      # Start zsh with full configuration
+      exec ${pkgs.zsh}/bin/zsh
     '';
   };
 
@@ -155,9 +167,11 @@ in
       mariadb_114
     ];
     shellHook = ''
-      ${shellAliases.aliases}
       MYSQL_BASEDIR=${pkgs.mariadb_114}
       ${mariadb.command}
+      
+      # Start zsh with full configuration
+      exec ${pkgs.zsh}/bin/zsh
     '';
   };
 
@@ -172,7 +186,8 @@ in
       rustup
     ];
     shellHook = ''
-      ${shellAliases.aliases}
+      # Start zsh with full configuration
+      exec ${pkgs.zsh}/bin/zsh
     '';
   };
 
@@ -185,7 +200,6 @@ in
 			jq
     ];
     shellHook = ''
-      ${shellAliases.aliases}
 
 			# ensure data dir exists
 			export typesenseDataDir="$HOME/.typesense-data"
@@ -209,6 +223,9 @@ in
 
 			echo ""
 			echo "To test: curl -H \"X-TYPESENSE-API-KEY: xyz123\" http://localhost:8108/health"
+			
+			# Start zsh with full configuration
+			exec ${pkgs.zsh}/bin/zsh
     '';
   };
 
@@ -236,6 +253,9 @@ in
 
       # Run Elasticsearch with the log directory specified
       elasticsearch -d
+      
+      # Start zsh with full configuration
+      exec ${pkgs.zsh}/bin/zsh
     '';
   };
 }
