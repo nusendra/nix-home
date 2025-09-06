@@ -191,6 +191,31 @@ in
     '';
   };
 
+  # nix develop ".#devShells.js-rust"
+  js-rust = pkgs.mkShell {
+    description = "JavaScript (Node.js) and Rust";
+    buildInputs = with pkgs; [
+      nodejs_20
+      (nodePackages.yarn.override { nodejs = nodejs_20; })
+      rustc
+      cargo
+      gcc
+      rustfmt
+      rustup
+      pkg-config
+    ];
+    shellHook = ''
+      echo "🚀 JavaScript & Rust Development Environment"
+      echo "Node.js version: $(node --version)"
+      echo "Yarn version: $(yarn --version)"
+      echo "Rust version: $(rustc --version)"
+      echo "Cargo version: $(cargo --version)"
+      
+      # Start zsh with full configuration
+      exec ${pkgs.zsh}/bin/zsh
+    '';
+  };
+
   # nix develop ".#devShells.typesense"
   typesense = pkgs.mkShell {
     description = "Typesense";

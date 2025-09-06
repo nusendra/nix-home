@@ -114,6 +114,7 @@ in {
       devphp81 = "cd ~/.config/nix/ && nix develop '.#devShells.php81'";
       devjs = "cd ~/.config/nix/ && nix develop '.#devShells.js'";
       devrust = "cd ~/.config/nix/ && nix develop '.#devShells.rust'";
+      jsrs = "cd ~/.config/nix/ && nix develop '.#devShells.js-rust'";
       devmariadb = "cd ~/.config/nix/ && nix develop '.#devShells.mariadb'";
       develasticsearch = "cd ~/.config/nix/ && export NIXPKGS_ALLOW_UNFREE=1 && nix develop --impure '.#devShells.elasticsearch'";
       devmysqlclient = "cd ~/.config/nix/ && nix develop '.#devShells.mysql-client'";
