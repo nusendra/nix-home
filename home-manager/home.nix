@@ -66,6 +66,7 @@ in {
     ripgrep
     docker-compose
     sshpass
+    ghostscript
   ];
 
 
@@ -110,6 +111,7 @@ in {
       gcom = "git commit -m ";
       gmer = "git merge ";
       p = "php artisan serve";
+      ghostscript = "${pkgs.ghostscript}/bin/gs";
 
       devphp = "cd ~/.config/nix/ && nix develop '.#devShells.php'";
       devphp81 = "cd ~/.config/nix/ && nix develop '.#devShells.php81'";
