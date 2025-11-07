@@ -153,7 +153,7 @@ in {
       [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
 
       export PATH="/Applications/Docker.app/Contents/Resources/bin:$PATH"
-      export DOCKER_HOST=unix:///Users/${username}/.docker/run/docker.sock
+      export DOCKER_HOST=unix:///Users/${username}/.orbstack/run/docker.sock
       
       # Ensure aliases are available in all shell sessions (including tmux)
       setopt aliases
