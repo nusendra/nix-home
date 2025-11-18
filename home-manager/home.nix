@@ -67,6 +67,7 @@ in {
     docker-compose
     sshpass
     ghostscript
+    imagemagick
   ];
 
 
