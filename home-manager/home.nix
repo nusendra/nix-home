@@ -3,6 +3,7 @@
   lib,
   config,
   pkgs,
+  cmdman,
   ...
 }: let
   username = builtins.getEnv "USER";
@@ -68,6 +69,7 @@ in {
     sshpass
     ghostscript
     imagemagick
+    cmdman.packages.aarch64-darwin.default
   ];
 
 
@@ -91,6 +93,7 @@ in {
       v ="nvim";
       t ="tmux";
       work ="cd ~/Projects/";
+      cm ="cmdman";
       nixconf = "cd ~/.config/nix";
       gplom = "git pull origin master";
       gploma = "git pull origin main";
@@ -149,13 +152,13 @@ in {
       plugins = [ "git" ];
       theme = "robbyrussell";
     };
-    initExtra = ''
+    initContent = ''
       [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh" # This loads nvm
       [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
 
       export PATH="/Applications/Docker.app/Contents/Resources/bin:$PATH"
       export DOCKER_HOST=unix:///Users/${username}/.orbstack/run/docker.sock
-      
+
       # Ensure aliases are available in all shell sessions (including tmux)
       setopt aliases
     '';

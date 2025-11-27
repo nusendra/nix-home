@@ -11,6 +11,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # cmdman - Command Manager CLI
+    cmdman.url = "github:nusendra/cmdman";
+
     # TODO: Add any other flake you might need
     # hardware.url = "github:nixos/nixos-hardware";
     nix-colors.url = "github:misterio77/nix-colors";
@@ -20,6 +23,7 @@
     self,
     nixpkgs,
     home-manager,
+    cmdman,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -30,7 +34,7 @@
     homeConfigurations = {
       "nusendra" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.${system}; # Home-manager requires 'pkgs' instance
-        extraSpecialArgs = {inherit inputs outputs;};
+        extraSpecialArgs = {inherit inputs outputs cmdman;};
         # > Our main home-manager configuration file <
         modules = [
           ./home-manager/home.nix

@@ -62,11 +62,11 @@ in
                 type = "lua";
                 config = builtins.readFile(./configs/cmp.lua);
             }
-            {
-                plugin = lazy-lsp-nvim;
-                type = "lua";
-                config = builtins.readFile(./configs/lazy-lsp.lua);
-            }
+            # {
+            #     plugin = lazy-lsp-nvim;
+            #     type = "lua";
+            #     config = builtins.readFile(./configs/lazy-lsp.lua);
+            # }  # TODO: Fix deprecation warning with nvim-lspconfig
 
             # Pretty errors
             trouble-nvim
@@ -89,7 +89,7 @@ in
             # }
 
             # global search and replace
-            nvim-spectre
+            # nvim-spectre  # TODO: Fix ARM64 build issue on macOS
         ];
         extraConfig = customKeybindings;
     };
