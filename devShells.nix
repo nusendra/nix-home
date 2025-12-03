@@ -15,14 +15,14 @@ in
 	mysql-client = pkgs.mkShell {
     description = "Just MySQL Client";
     buildInputs = with pkgs; [
-      mysql-client
+      mariadb_114
     ];
 
 		shellHook = ''
-			export PATH="${pkgs.mysql-client}/bin:$PATH"
-			export LDFLAGS="-L${pkgs.mysql-client}/lib"
-			export CPPFLAGS="-I${pkgs.mysql-client}/include"
-			
+			export PATH="${pkgs.mariadb_114}/bin:$PATH"
+			export LDFLAGS="-L${pkgs.mariadb_114}/lib"
+			export CPPFLAGS="-I${pkgs.mariadb_114}/include"
+
 			# Start zsh with full configuration
 			exec ${pkgs.zsh}/bin/zsh
 		'';
