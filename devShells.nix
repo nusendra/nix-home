@@ -6,7 +6,7 @@ let
 	typesenseServerFixed = pkgs.typesense.overrideAttrs (old: {
     src = pkgs.fetchurl {
       url    = old.src.url;
-      sha256 = "kOjO3kokmvaXr55wcQKUboYzzTSaF9Ye+tY/A4hNvsY=";  # the “got:” hash
+      sha256 = "yAOR/bGYBQGp8Mllhh0yKyqmItd2+IfLib3W+lIHwr0=";
     };
   });
 in
