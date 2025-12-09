@@ -32,8 +32,8 @@ in
   js = pkgs.mkShell {
     description = "Node.js 20 & Bun";
     buildInputs = with pkgs; [
-      nodejs_20
-      (nodePackages.yarn.override { nodejs = nodejs_20; })
+      nodejs_24
+      (nodePackages.yarn.override { nodejs = nodejs_24; })
       bun
       redis
       postgresql
@@ -56,8 +56,8 @@ in
   only-js = pkgs.mkShell {
     description = "Only Node.js";
     buildInputs = with pkgs; [
-      nodejs_20
-      (nodePackages.yarn.override { nodejs = nodejs_20; })
+      nodejs_24
+      (nodePackages.yarn.override { nodejs = nodejs_24; })
     ];
     shellHook = ''
       # Start zsh with full configuration
