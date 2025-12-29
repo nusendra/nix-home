@@ -86,8 +86,8 @@ in
       php83
       php83Packages.composer
 			redis
-			nodejs_20
-			(nodePackages.yarn.override { nodejs = nodejs_20; })
+			nodejs_24
+			(nodePackages.yarn.override { nodejs = nodejs_24; })
       (with (php83Extensions); [pdo xml redis mongodb])
     ];
     shellHook = ''
