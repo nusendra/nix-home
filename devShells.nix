@@ -278,7 +278,74 @@ in
 
       # Run Elasticsearch with the log directory specified
       elasticsearch -d
-      
+
+      # Start zsh with full configuration
+      exec ${pkgs.zsh}/bin/zsh
+    '';
+  };
+
+  # nix develop ".#devShells.ployer"
+  ployer = pkgs.mkShell {
+    description = "Ployer - Rust + SvelteKit + Caddy PaaS";
+    buildInputs = with pkgs; [
+      # Rust toolchain
+      rustc
+      cargo
+      rustfmt
+      clippy
+      rustup
+      rust-analyzer
+
+      # Node.js toolchain
+      nodejs_24
+      (nodePackages.yarn.override { nodejs = nodejs_24; })
+      bun
+
+      # Build tools
+      gcc
+      pkg-config
+      openssl
+
+      # Database
+      sqlite
+
+      # Reverse proxy
+      caddy
+
+      # Docker CLI
+      docker
+      docker-compose
+
+      # Development utilities
+      jq
+      curl
+    ];
+
+    shellHook = ''
+      echo "🚀 Ployer Development Environment"
+      echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+      echo "📦 Rust:    $(rustc --version)"
+      echo "📦 Cargo:   $(cargo --version)"
+      echo "📦 Node.js: $(node --version)"
+      echo "📦 Bun:     $(bun --version)"
+      echo "📦 Caddy:   $(caddy version)"
+      echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+      echo ""
+      echo "💡 Quick start:"
+      echo "   Backend:  cargo run --bin ployer"
+      echo "   Frontend: cd frontend && bun run dev"
+      echo "   Caddy:    caddy run --config Caddyfile"
+      echo ""
+
+      # Set up Rust environment variables
+      export RUST_BACKTRACE=1
+      export CARGO_TARGET_DIR=target
+
+      # Set up OpenSSL for Rust compilation
+      export OPENSSL_DIR="${pkgs.openssl.dev}"
+      export OPENSSL_LIB_DIR="${pkgs.openssl.out}/lib"
+      export PKG_CONFIG_PATH="${pkgs.openssl.dev}/lib/pkgconfig"
+
       # Start zsh with full configuration
       exec ${pkgs.zsh}/bin/zsh
     '';

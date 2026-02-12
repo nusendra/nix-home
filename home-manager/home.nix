@@ -41,17 +41,12 @@ in {
       ANDROID_NDK_HOME="${homeDirectory}/Library/Android/sdk/ndk";
       JAVA_HOME="/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home";
       PATH = pkgs.lib.mkBefore "${homeDirectory}/Library/Android/sdk/emulator:${homeDirectory}/Library/Android/sdk/platform-tools";
-      NVM_DIR = "${homeDirectory}/.nvm";
 
       NIX_PATH = "${homeDirectory}/.nix-defexpr/channels";
       NIX_PROFILES = "/nix/var/nix/profiles/default /etc/profiles/per-user/${username}";
       NIX_USER_PROFILE_DIR = "/nix/var/nix/profiles/per-user/${username}";
     };
     file.".zprofile".text = ''
-			export NVM_DIR="$HOME/.nvm"
-				[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-				[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-
       # Load Homebrew environment
       if [ -x /opt/homebrew/bin/brew ]; then
         eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -132,6 +127,9 @@ in {
       pj = "cd ~/.config/nix/ && nix develop '.#devShells.php-js'";
       js = "cd ~/.config/nix/ && nix develop '.#devShells.only-js'";
       devtypesense = "cd ~/.config/nix/ && nix develop '.#devShells.typesense'";
+      devployer = "cd ~/.config/nix/ && nix develop '.#devShells.ployer'";
+      c = "claude";
+      cc = "claude -c";
 
       dcb = "docker-compose build";
       dcu = "docker-compose up";
@@ -154,9 +152,6 @@ in {
       theme = "robbyrussell";
     };
     initContent = ''
-      [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh" # This loads nvm
-      [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
-
       export PATH="/Applications/Docker.app/Contents/Resources/bin:$PATH"
       export DOCKER_HOST=unix:///Users/${username}/.orbstack/run/docker.sock
 
