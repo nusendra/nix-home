@@ -152,7 +152,7 @@ in {
       theme = "robbyrussell";
     };
     initContent = ''
-      export PATH="/Applications/Docker.app/Contents/Resources/bin:$PATH"
+      export PATH="$HOME/.local/bin:/Applications/Docker.app/Contents/Resources/bin:$PATH"
       export DOCKER_HOST=unix:///Users/${username}/.orbstack/run/docker.sock
 
       # Ensure aliases are available in all shell sessions (including tmux)
