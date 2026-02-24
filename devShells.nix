@@ -83,12 +83,11 @@ in
   php-js = pkgs.mkShell {
     description = "Only PHP 8.3 and JS";
     buildInputs = with pkgs; [
-      php83
+      (php83.withExtensions ({ enabled, all }: enabled ++ (with all; [ mongodb redis ])))
       php83Packages.composer
 			redis
 			nodejs_24
 			(nodePackages.yarn.override { nodejs = nodejs_24; })
-      (with (php83Extensions); [pdo xml redis mongodb])
     ];
     shellHook = ''
 
