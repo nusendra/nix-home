@@ -128,6 +128,7 @@ in {
       js = "cd ~/.config/nix/ && nix develop '.#devShells.only-js'";
       devtypesense = "cd ~/.config/nix/ && nix develop '.#devShells.typesense'";
       devployer = "cd ~/.config/nix/ && nix develop '.#devShells.ployer'";
+      devnode10 = "cd ~/.config/nix/ && nix develop '.#devShells.node10'";
       c = "claude";
       cc = "claude -c";
 

@@ -283,6 +283,39 @@ in
     '';
   };
 
+  # nix develop ".#devShells.node10"
+  node10 = pkgs.mkShell {
+    description = "Node.js 10 (via nvm) for legacy projects";
+    buildInputs = with pkgs; [
+      curl
+      git
+    ];
+    shellHook = ''
+      export NVM_DIR="$HOME/.nvm"
+
+      # Install nvm if not present
+      if [ ! -d "$NVM_DIR" ]; then
+        echo "Installing nvm..."
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+      fi
+
+      # Load nvm
+      [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+      # Install Node.js 10 if not already installed
+      nvm install 10
+      nvm use 10
+
+      # Export PATH so it persists after exec zsh
+      export PATH="$(dirname $(nvm which 10)):$PATH"
+
+      echo "Node.js: $(node --version)"
+      echo "npm:     $(npm --version)"
+
+      exec ${pkgs.zsh}/bin/zsh
+    '';
+  };
+
   # nix develop ".#devShells.ployer"
   ployer = pkgs.mkShell {
     description = "Ployer - Rust + SvelteKit + Caddy PaaS";
