@@ -283,6 +283,23 @@ in
     '';
   };
 
+  # nix develop ".#devShells.ansible"
+  ansible = pkgs.mkShell {
+    description = "Ansible automation";
+    buildInputs = with pkgs; [
+      ansible
+      ansible-lint
+      sshpass
+      openssh
+      python3
+      jq
+    ];
+    shellHook = ''
+      echo "Ansible: $(ansible --version | head -1)"
+      exec ${pkgs.zsh}/bin/zsh
+    '';
+  };
+
   # nix develop ".#devShells.node10"
   node10 = pkgs.mkShell {
     description = "Node.js 10 (via nvm) for legacy projects";
