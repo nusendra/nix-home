@@ -129,7 +129,7 @@ in {
       devtypesense = "cd ~/.config/nix/ && nix develop '.#devShells.typesense'";
       devployer = "cd ~/.config/nix/ && nix develop '.#devShells.ployer'";
       devnode10 = "cd ~/.config/nix/ && nix develop '.#devShells.node10'";
-      devansible = "cd ~/.config/nix/ && nix develop '.#devShells.ansible'";
+      devinfra = "cd ~/.config/nix/ && export NIXPKGS_ALLOW_UNFREE=1 && nix develop --impure '.#devShells.infra'";
       c = "claude";
       cc = "claude -c";
 

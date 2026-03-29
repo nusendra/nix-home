@@ -283,19 +283,21 @@ in
     '';
   };
 
-  # nix develop ".#devShells.ansible"
-  ansible = pkgs.mkShell {
-    description = "Ansible automation";
+  # nix develop ".#devShells.infra"
+  infra = pkgs.mkShell {
+    description = "Infrastructure (Ansible + Terraform)";
     buildInputs = with pkgs; [
       ansible
       ansible-lint
+      terraform
       sshpass
       openssh
       python3
       jq
     ];
     shellHook = ''
-      echo "Ansible: $(ansible --version | head -1)"
+      echo "Ansible:   $(ansible --version | head -1)"
+      echo "Terraform: $(terraform version | head -1)"
       exec ${pkgs.zsh}/bin/zsh
     '';
   };
