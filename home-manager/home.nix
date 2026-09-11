@@ -8,6 +8,10 @@
 }: let
   username = builtins.getEnv "USER";
   homeDirectory = builtins.getEnv "HOME";
+  # Claude Code config lives in this repo (claude/). Out-of-store symlinks keep the
+  # files writable so `claude` can still edit settings.json and install skills.
+  claudeLink = path:
+    config.lib.file.mkOutOfStoreSymlink "${homeDirectory}/.config/nix/claude/${path}";
 in {
   # Import other home-manager modules here
   imports = [
@@ -161,6 +165,14 @@ in {
       setopt aliases
     '';
   };
+
+  # Claude Code config synced via this repo (see claude/)
+  home.file.".claude/settings.json".source = claudeLink "settings.json";
+  home.file.".claude/CLAUDE.md".source = claudeLink "CLAUDE.md";
+  home.file.".claude/RTK.md".source = claudeLink "RTK.md";
+  home.file.".claude/skills".source = claudeLink "skills";
+  home.file.".claude/agents".source = claudeLink "agents";
+  home.file.".claude/hooks".source = claudeLink "hooks";
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";

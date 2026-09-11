@@ -1,0 +1,75 @@
+{
+  "model": "claude-fable-5-1[1m]",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/hooks/rtk-rewrite.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "figma@claude-plugins-official": true,
+    "caveman@caveman": true,
+    "humanizer@humanizer": true
+  },
+  "extraKnownMarketplaces": {
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman"
+      }
+    },
+    "humanizer": {
+      "source": {
+        "source": "github",
+        "repo": "blader/humanizer"
+      }
+    }
+  },
+  "alwaysThinkingEnabled": true,
+  "effortLevel": "high",
+  "tui": "fullscreen",
+  "skipDangerousModePermissionPrompt": true,
+  "editorMode": "vim",
+  "autoMode": {
+    "soft_deny": [
+      "$defaults",
+      "Bash(terraform apply:*) in terraform/environments/production",
+      "Bash(terraform destroy:*) in terraform/environments/production or terraform/bootstrap"
+    ],
+    "environment": [
+      "### Org-wide",
+      "**Organization**: streamlinetechnology-io (GitHub org; repo `infra` under this org)",
+      "**Cloud provider(s)**: AWS (Terraform environments: dev, staging, production, slw-homes) and Linode (sea-typesense environment)",
+      "**Repository visibility**: Private (streamlinetechnology-io/infra, confirmed via gh)",
+      "**Internal sharing / snippet hosting**: None configured — treat public paste/gist services as outside the trust boundary",
+      "**Secrets management**: Local `.env` files (gitignored) — `ansible/.env`, `terraform/.env`; Ansible Vault-style secrets at `ansible/inventory/group_vars/all/secrets.yml` (gitignored)",
+      "**Default / protected branches**: Default branch unknown (origin/HEAD unset); no protected branches listed via gh, rulesets not queryable here — treat as possibly protected via ruleset despite empty classic list",
+      "**CI/CD deploy targets**: None configured",
+      "**Network posture**: None configured",
+      "**Host containment**: None configured — assume Claude Code runs on an ordinary developer machine or CI runner with open internet",
+      "**Source control**: The trusted repo (streamlinetechnology-io/infra) and its origin remote only (github.com:streamlinetechnology-io/infra.git)",
+      "**Trusted internal domains**: None configured",
+      "**Trusted cloud buckets**: streamline-terraform-state-f2e90f01 (config-derived — not a confirmed upload destination; uploads of local data still require confirmation)",
+      "**Key internal services**: api.linode.com (Linode API, used for sea-typesense environment)",
+      "**Internal package registry**: None configured",
+      "**Sensitive data locations & audiences**: `ansible/.env`, `ansible/.env.example`, `terraform/.env`, `terraform/.env.example`, `ansible/inventory/group_vars/all/secrets.yml`, `terraform/bootstrap/terraform.tfstate`, `terraform/bootstrap/terraform.tfstate.backup`, `terraform/environments/*/terraform.tfvars` (esp. production, staging, sea-typesense, slw-homes) — share only with audiences cleared at the infra-team bar",
+      "**Data retention / declassification**: None configured",
+      "**Sensitive remote targets**: any namespace, host, or container whose name carries `prod` or `production` as a whole word or name segment — includes `terraform/environments/production/*` in this repo",
+      "**Protected deployment namespaces / environments**: terraform/environments/production (AWS), plus staging as a pre-prod guard — fall back to the Sensitive remote targets heuristic for other matches",
+      "**Protected IaC scopes**: IAM, RBAC, networking, quota, and node-pool resources; anything whose name or tag carries `prod` or `production` as a whole word or name segment — includes `terraform/environments/production/*`, `terraform/bootstrap/*` (state backend), and `terraform/modules/{ec2,security-group,vpc}` when applied against production",
+      "### User-specific",
+      "**Primary use of Claude Code**: Infrastructure as Code development and operations (Terraform + Ansible) for Streamline Apps",
+      "**Trusted repo**: streamlinetechnology-io/infra (private, working directory /Users/nusendra/Projects/streamline_apps/infra) and its origin remote — confidential material (tfstate, tfvars, secrets) is fine to reference within this repo's own workflows but must never be pushed to public repos or unrelated destinations",
+      "**Org-specific CLis**: ansible-playbook, ansible-inventory, ansible, ansible-galaxy (Ansible tooling used routinely in this repo); aws CLI for AWS environments",
+      "**Routine under this repo**: routine Terraform/Ansible operations (plan, playbook runs, inventory checks) under this repo's `terraform/` and `ansible/` directories, excluding production namespace writes"
+    ]
+  }
+}
