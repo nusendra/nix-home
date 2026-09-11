@@ -65,6 +65,7 @@ in {
 
   home.packages = with pkgs; [
     ripgrep
+    python3 # required by ui-ux-pro-max skill search scripts
     docker-compose
     sshpass
     ghostscript
