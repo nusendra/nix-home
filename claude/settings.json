@@ -1,5 +1,5 @@
 {
-  "model": "claude-fable-5-1",
+  "model": "opus[1m]",
   "hooks": {
     "PreToolUse": [
       {
@@ -8,6 +8,28 @@
           {
             "type": "command",
             "command": "$HOME/.claude/hooks/rtk-rewrite.sh"
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bd prime"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bd prime"
           }
         ]
       }
@@ -71,5 +93,9 @@
       "**Org-specific CLis**: ansible-playbook, ansible-inventory, ansible, ansible-galaxy (Ansible tooling used routinely in this repo); aws CLI for AWS environments",
       "**Routine under this repo**: routine Terraform/Ansible operations (plan, playbook runs, inventory checks) under this repo's `terraform/` and `ansible/` directories, excluding production namespace writes"
     ]
-  }
+  },
+  "permissions": {
+    "defaultMode": "auto"
+  },
+  "skipAutoPermissionPrompt": true
 }
