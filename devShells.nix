@@ -80,11 +80,15 @@ in
   };
 
   # nix develop ".#devShells.phpjs"
-  php-js = pkgs.mkShell {
-    description = "Only PHP 8.3 and JS";
+  php-js = let
+    # Composer must be built from the same PHP that has the extensions,
+    # otherwise it runs with a bare php84 and reports ext-mongodb missing.
+    php = pkgs.php84.withExtensions ({ enabled, all }: enabled ++ (with all; [ mongodb redis ]));
+  in pkgs.mkShell {
+    description = "Only PHP 8.4 and JS";
     buildInputs = with pkgs; [
-      (php83.withExtensions ({ enabled, all }: enabled ++ (with all; [ mongodb redis ])))
-      php83Packages.composer
+      php
+      php.packages.composer
 			redis
 			nodejs_24
 			(nodePackages.yarn.override { nodejs = nodejs_24; })
@@ -111,14 +115,15 @@ in
   };
 
   # nix develop ".#devShells.php"
-  php = pkgs.mkShell {
+  php = let
+    php = pkgs.php83.withExtensions ({ enabled, all }: enabled ++ (with all; [ mongodb redis ]));
+  in pkgs.mkShell {
     description = "PHP 8.3";
     buildInputs = with pkgs; [
       mariadb_114
       redis
-      php83
-      php83Packages.composer
-      (with (php83Extensions); [pdo xml redis mongodb])
+      php
+      php.packages.composer
     ];
     shellHook = ''
       MYSQL_BASEDIR=${pkgs.mariadb_114}
@@ -126,11 +131,6 @@ in
 
       echo "Starting Redis..."
       redis-server --daemonize yes
-
-      echo "extension=/nix/store/jdj6ml38xjsayq5zmgimlxdkbwarsmng-php-mongodb-1.17.3/lib/php/extensions/mongodb.so" > /Users/${username}/.php-extensions/mongodb.ini
-
-      # Set PHP_INI_SCAN_DIR to include the custom directory
-      export PHP_INI_SCAN_DIR="/nix/store/yxlsvn4biz4b2r2hajpys297r3yqsj3r-php-with-extensions-8.3.4/lib:/Users/${username}/.php-extensions"
 
       echo "PHP configuration:"
       php --ini
