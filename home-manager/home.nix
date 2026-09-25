@@ -93,6 +93,8 @@ in {
     shellAliases = {
       v ="nvim";
       t ="tmux";
+      h = "herdr";
+      hs = "herdr server stop";
       work ="cd ~/Projects/";
       cm ="cmdman";
       nixconf = "cd ~/.config/nix";
