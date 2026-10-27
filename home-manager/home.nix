@@ -124,6 +124,7 @@ in {
       devphp81 = "cd ~/.config/nix/ && nix develop '.#devShells.php81'";
       devjs = "cd ~/.config/nix/ && nix develop '.#devShells.js'";
       devrust = "cd ~/.config/nix/ && nix develop '.#devShells.rust'";
+      pyt = "cd ~/.config/nix/ && nix develop '.#devShells.python'";
       jsrs = "cd ~/.config/nix/ && nix develop '.#devShells.js-rust'";
       devmariadb = "cd ~/.config/nix/ && nix develop '.#devShells.mariadb'";
       develasticsearch = "cd ~/.config/nix/ && export NIXPKGS_ALLOW_UNFREE=1 && nix develop --impure '.#devShells.elasticsearch'";
@@ -163,6 +164,9 @@ in {
     initContent = ''
       export PATH="$HOME/.local/bin:/Applications/Docker.app/Contents/Resources/bin:$PATH"
       export DOCKER_HOST=unix:///Users/${username}/.orbstack/run/docker.sock
+
+      # Keep a devshell's own binaries ahead of ~/.nix-profile after exec zsh
+      [ -n "$DEVSHELL_PATH" ] && export PATH="$DEVSHELL_PATH:$PATH"
 
       # Ensure aliases are available in all shell sessions (including tmux)
       setopt aliases

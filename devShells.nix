@@ -3,6 +3,12 @@ let
   mariadb = import ./utils/mariadb.nix;
   username = builtins.getEnv "USER";
 
+  # Always ship Nix git: otherwise /usr/bin/git (Apple shim) calls xcbuild's
+  # xcrun from the darwin stdenv, which spams "unhandled Platform key FamilyDisplayName".
+  mkShell = args: pkgs.mkShell (args // {
+    packages = (args.packages or []) ++ [ pkgs.git ];
+  });
+
 	typesenseServerFixed = pkgs.typesense.overrideAttrs (old: {
     src = pkgs.fetchurl {
       url    = old.src.url;
@@ -12,7 +18,7 @@ let
 in
 {
 	# nix develop ".#devShells.mysql-client"
-	mysql-client = pkgs.mkShell {
+	mysql-client = mkShell {
     description = "Just MySQL Client";
     buildInputs = with pkgs; [
       mariadb_114
@@ -29,7 +35,7 @@ in
 	};
 
   # nix develop ".#devShells.js"
-  js = pkgs.mkShell {
+  js = mkShell {
     description = "Node.js 20 & Bun";
     buildInputs = with pkgs; [
       nodejs_24
@@ -53,7 +59,7 @@ in
   };
 
   # nix develop ".#devShells.onlyjs"
-  only-js = pkgs.mkShell {
+  only-js = mkShell {
     description = "Only Node.js";
     buildInputs = with pkgs; [
       nodejs_24
@@ -66,7 +72,7 @@ in
   };
 
   # nix develop ".#devShells.onlyphp"
-  only-php = pkgs.mkShell {
+  only-php = mkShell {
     description = "Only PHP 8.1";
     buildInputs = with pkgs; [
       php81
@@ -84,7 +90,7 @@ in
     # Composer must be built from the same PHP that has the extensions,
     # otherwise it runs with a bare php84 and reports ext-mongodb missing.
     php = pkgs.php84.withExtensions ({ enabled, all }: enabled ++ (with all; [ mongodb redis ]));
-  in pkgs.mkShell {
+  in mkShell {
     description = "Only PHP 8.4 and JS";
     buildInputs = with pkgs; [
       php
@@ -117,7 +123,7 @@ in
   # nix develop ".#devShells.php"
   php = let
     php = pkgs.php83.withExtensions ({ enabled, all }: enabled ++ (with all; [ mongodb redis ]));
-  in pkgs.mkShell {
+  in mkShell {
     description = "PHP 8.3";
     buildInputs = with pkgs; [
       mariadb_114
@@ -142,7 +148,7 @@ in
     '';
   };
   # nix develop ".#devShells.php81"
-  php81 = pkgs.mkShell {
+  php81 = mkShell {
     description = "PHP 8.1";
     buildInputs = with pkgs; [
       mariadb_114
@@ -160,7 +166,7 @@ in
   };
 
   # nix develop ".#devShells.mariadb"
-  mariadb = pkgs.mkShell {
+  mariadb = mkShell {
     description = "MariaDB";
     buildInputs = with pkgs; [
       mariadb_114
@@ -175,7 +181,7 @@ in
   };
 
   # nix develop ".#devShells.rust"
-  rust = pkgs.mkShell {
+  rust = mkShell {
     description = "Rust";
     buildInputs = with pkgs; [
       rustc
@@ -190,8 +196,30 @@ in
     '';
   };
 
+  # nix develop ".#devShells.python"
+  python = let
+    python = pkgs.python3.withPackages (ps: with ps; [ pip virtualenv h11 tqdm ]);
+  in mkShell {
+    description = "Python 3 with h11 and tqdm";
+    buildInputs = with pkgs; [
+      python
+      uv
+    ];
+    shellHook = ''
+      echo "Python: $(${python}/bin/python3 --version)"
+      echo "uv:     $(uv --version)"
+      ${python}/bin/python3 -c "import h11, tqdm; print(f'h11 {h11.__version__}, tqdm {tqdm.__version__}')"
+
+      # zsh startup files reorder PATH; initContent re-prepends this
+      export DEVSHELL_PATH="${python}/bin"
+
+      # Start zsh with full configuration
+      exec ${pkgs.zsh}/bin/zsh
+    '';
+  };
+
   # nix develop ".#devShells.js-rust"
-  js-rust = pkgs.mkShell {
+  js-rust = mkShell {
     description = "JavaScript (Node.js) and Rust";
     buildInputs = with pkgs; [
       nodejs_20
@@ -216,7 +244,7 @@ in
   };
 
   # nix develop ".#devShells.typesense"
-  typesense = pkgs.mkShell {
+  typesense = mkShell {
     description = "Typesense";
     buildInputs = with pkgs; [
 			typesenseServerFixed
@@ -255,7 +283,7 @@ in
 
   # elasticsearch
   # nix develop ".#devshells.elasticsearch"
-  elasticsearch = pkgs.mkShell {
+  elasticsearch = mkShell {
     description = "ElasticSearch";
     buildInputs = with pkgs; [
       elasticsearch
@@ -284,7 +312,7 @@ in
   };
 
   # nix develop ".#devShells.infra"
-  infra = pkgs.mkShell {
+  infra = mkShell {
     description = "Infrastructure (Ansible + Terraform)";
     buildInputs = with pkgs; [
       ansible
@@ -303,7 +331,7 @@ in
   };
 
   # nix develop ".#devShells.node10"
-  node10 = pkgs.mkShell {
+  node10 = mkShell {
     description = "Node.js 10 (via nvm) for legacy projects";
     buildInputs = with pkgs; [
       curl
@@ -336,7 +364,7 @@ in
   };
 
   # nix develop ".#devShells.ployer"
-  ployer = pkgs.mkShell {
+  ployer = mkShell {
     description = "Ployer - Rust + SvelteKit + Caddy PaaS";
     buildInputs = with pkgs; [
       # Rust toolchain
