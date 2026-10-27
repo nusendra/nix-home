@@ -1,5 +1,8 @@
 {
-  "model": "opus[1m]",
+  "permissions": {
+    "defaultMode": "auto"
+  },
+  "model": "sonnet",
   "hooks": {
     "PreToolUse": [
       {
@@ -32,8 +35,22 @@
             "command": "bd prime"
           }
         ]
+      },
+      {
+        "matcher": "^(startup|resume|clear|compact|fork)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '/Users/nusendrahanggarawan/.claude/hooks/herdr-agent-state.sh' session",
+            "timeout": 10
+          }
+        ]
       }
     ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash -c 'f=$(ls -t \"$HOME\"/.claude/plugins/cache/caveman/caveman/*/src/hooks/caveman-statusline.sh 2>/dev/null | head -1); [ -n \"$f\" ] && bash \"$f\"'"
   },
   "enabledPlugins": {
     "rust-analyzer-lsp@claude-plugins-official": true,
@@ -60,6 +77,8 @@
   "tui": "fullscreen",
   "skipDangerousModePermissionPrompt": true,
   "editorMode": "vim",
+  "switchModelsOnFlag": true,
+  "skipAutoPermissionPrompt": true,
   "autoMode": {
     "soft_deny": [
       "$defaults",
@@ -93,9 +112,5 @@
       "**Org-specific CLis**: ansible-playbook, ansible-inventory, ansible, ansible-galaxy (Ansible tooling used routinely in this repo); aws CLI for AWS environments",
       "**Routine under this repo**: routine Terraform/Ansible operations (plan, playbook runs, inventory checks) under this repo's `terraform/` and `ansible/` directories, excluding production namespace writes"
     ]
-  },
-  "permissions": {
-    "defaultMode": "auto"
-  },
-  "skipAutoPermissionPrompt": true
+  }
 }
